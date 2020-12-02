@@ -44,6 +44,46 @@ ignored: directory (1)
 
 ![img](./inner.svg)
   
+## 亮点
+
+### 运营策略模式
+
+LoaderImage/LoaderText/LoaderAudio等类基于基类LoaderBase，然后通过策略供给不同后缀名的文件来作为不同的处理：
+
+``` js
+var LOADERS = {
+  png: LoaderImage,
+  jpg: LoaderImage,
+  jpeg: LoaderImage,
+  webp: LoaderImage,
+  gif: LoaderImage,
+  json: LoaderJSON,
+  mp4: LoaderVideo,
+  ogg: LoaderVideo,
+  ogv: LoaderVideo,
+  webm: LoaderVideo,
+  mp3: LoaderAudio,
+  wav: LoaderAudio
+};
+```
+
+这样不同的文件就可以使用不同的预加载方式了。
+
+### 图片预加载
+
+图片预加载的实现是通过new Image来完成：
+
+``` js
+_createAndLoadImage: function (src) {
+  this.content = new Image();
+  this.content.onload = this._onImageLoadComplete.bind(this);
+  this.content.onerror = this._onImageLoadFail.bind(this);
+  this.content.src = src;
+}
+```
+
+
+
 
 # Preloader
 
